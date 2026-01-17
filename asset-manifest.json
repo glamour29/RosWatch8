@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/RosWatch8/static/css/main.f52180fd.css",
-    "main.js": "/RosWatch8/static/js/main.a2eea7ea.js",
+    "main.js": "/RosWatch8/static/js/main.f8d77637.js",
     "static/js/453.d207bd0b.chunk.js": "/RosWatch8/static/js/453.d207bd0b.chunk.js",
     "static/media/bg-01.jpg": "/RosWatch8/static/media/bg-01.a7174216ced9ddfd9193.jpg",
     "static/media/LogoRosWatch.png": "/RosWatch8/static/media/LogoRosWatch.50af2556ff7f2517fd0f.png",
@@ -11,11 +11,11 @@
     "static/media/slick.woff": "/RosWatch8/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/RosWatch8/index.html",
     "main.f52180fd.css.map": "/RosWatch8/static/css/main.f52180fd.css.map",
-    "main.a2eea7ea.js.map": "/RosWatch8/static/js/main.a2eea7ea.js.map",
+    "main.f8d77637.js.map": "/RosWatch8/static/js/main.f8d77637.js.map",
     "453.d207bd0b.chunk.js.map": "/RosWatch8/static/js/453.d207bd0b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f52180fd.css",
-    "static/js/main.a2eea7ea.js"
+    "static/js/main.f8d77637.js"
   ]
 }
