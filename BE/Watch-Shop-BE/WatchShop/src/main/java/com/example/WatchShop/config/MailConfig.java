@@ -1,8 +1,9 @@
 package com.example.WatchShop.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
@@ -11,25 +12,18 @@ import java.util.Properties;
 @Configuration
 public class MailConfig {
 
-    @Value("${spring.mail.host:smtp.gmail.com}")
-    private String host;
-
-    @Value("${spring.mail.port:587}")
-    private int port;
-
-    @Value("${spring.mail.username:anki.llw.org@gmail.com}")
-    private String username;
-
-    @Value("${spring.mail.password:qobxbdsrjuwfjeos}")
-    private String password;
+    @Autowired
+    private Environment env;
 
     @Bean
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost(host);
-        mailSender.setPort(port);
-        mailSender.setUsername(username);
-        mailSender.setPassword(password);
+        
+        // Read from environment with defaults
+        mailSender.setHost(env.getProperty("spring.mail.host", "smtp.gmail.com"));
+        mailSender.setPort(Integer.parseInt(env.getProperty("spring.mail.port", "587")));
+        mailSender.setUsername(env.getProperty("spring.mail.username", "anki.llw.org@gmail.com"));
+        mailSender.setPassword(env.getProperty("spring.mail.password", "qobxbdsrjuwfjeos"));
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
