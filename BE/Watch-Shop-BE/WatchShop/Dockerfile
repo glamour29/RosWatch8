@@ -1,22 +1,23 @@
-# Sử dụng Eclipse Temurin OpenJDK 17 (recommended)
+# Sử dụng Eclipse Temurin OpenJDK 17 với Maven (recommended)
 FROM eclipse-temurin:17-jdk
+
+# Cài đặt Maven
+RUN apt-get update && apt-get install -y maven && rm -rf /var/lib/apt/lists/*
 
 # Tạo thư mục làm việc
 WORKDIR /app
 
-# Copy Maven wrapper và pom.xml
-COPY mvnw .
-COPY .mvn .mvn
+# Copy pom.xml trước (để cache dependencies)
 COPY pom.xml .
 
-# Cấp quyền thực thi cho mvnw
-RUN chmod +x ./mvnw
+# Download dependencies (cache layer)
+RUN mvn dependency:go-offline -B || true
 
 # Copy source code
 COPY src ./src
 
 # Build ứng dụng
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 # Expose port
 EXPOSE 8080
