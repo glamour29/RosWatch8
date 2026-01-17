@@ -1,5 +1,5 @@
-# Sử dụng OpenJDK 17
-FROM openjdk:17-jdk-slim
+# Sử dụng Eclipse Temurin OpenJDK 17 (recommended)
+FROM eclipse-temurin:17-jdk
 
 # Tạo thư mục làm việc
 WORKDIR /app
