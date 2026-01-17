@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/Watch-Shop/static/css/main.9e146f86.css",
+    "main.js": "/Watch-Shop/static/js/main.5e6292a7.js",
+    "static/js/453.d207bd0b.chunk.js": "/Watch-Shop/static/js/453.d207bd0b.chunk.js",
+    "static/media/bg-01.jpg": "/Watch-Shop/static/media/bg-01.a7174216ced9ddfd9193.jpg",
+    "static/media/LogoRosWatch.png": "/Watch-Shop/static/media/LogoRosWatch.50af2556ff7f2517fd0f.png",
+    "static/media/slick.svg": "/Watch-Shop/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/Watch-Shop/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/Watch-Shop/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/Watch-Shop/static/media/slick.295183786cd8a1389865.woff",
+    "index.html": "/Watch-Shop/index.html",
+    "main.9e146f86.css.map": "/Watch-Shop/static/css/main.9e146f86.css.map",
+    "main.5e6292a7.js.map": "/Watch-Shop/static/js/main.5e6292a7.js.map",
+    "453.d207bd0b.chunk.js.map": "/Watch-Shop/static/js/453.d207bd0b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9e146f86.css",
+    "static/js/main.5e6292a7.js"
+  ]
+}
