@@ -6,6 +6,7 @@ import ReactPaginate from 'react-paginate';
 import { GrNext, GrPrevious } from 'react-icons/gr';
 import requestHandler from '../../utils/requestHandle';
 import Toast from '../../components/Toast';
+import { getImageUrl } from '../../utils/functionCommon';
 
 const INIT_IMAGE = 'https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg';
 const itemsPerPage = 10;
@@ -93,7 +94,7 @@ const Products = () => {
   const handleEdit = (product) => {
     setEditProduct(product);
     setImages(product.imageSource[0]);
-    setBase64String(`http://localhost:8080/image/${product.imageSource[0]}`);
+    setBase64String(getImageUrl(product.imageSource[0]));
     setIsModalOpen(true);
   };
 
@@ -192,7 +193,7 @@ const Products = () => {
       <tr key={product.id}>
         <td className='text-center'>
           <img
-            src={`http://localhost:8080/image/${product.imageSource[0]}`}
+            src={getImageUrl(product.imageSource[0])}
             alt='chưa có ảnh'
           />
         </td>

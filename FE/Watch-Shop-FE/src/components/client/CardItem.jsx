@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Rating from './RatingStar';
-import { lamTronGia } from '../../utils/functionCommon';
+import { lamTronGia, getImageUrl } from '../../utils/functionCommon';
 
 const CardItem = ({ item }) => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const CardItem = ({ item }) => {
         <div className='cursor-pointer rounded-t-lg overflow-hidden h-[310px] flex items-center'>
           <img
             className='hover:scale-125 duration-200 ease-linear'
-            src={`http://localhost:8080/image/${item.imageSource[0]}`}
+            src={getImageUrl(item.imageSource[0])}
             alt='img product'
             onClick={() => handleNavigate(item.id)}
           />

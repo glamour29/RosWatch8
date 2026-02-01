@@ -84,7 +84,7 @@ const OrderDetail = () => {
         // thanh toan online
         const dataReq = {
           total: caculateTotalPrice,
-          urlReturn: 'http://localhost:3000/client/order-success',
+          urlReturn: `${window.location.origin}/#/client/order-success`,
         };
         const response = await requestHandler.post('vn-pay/create-payment', dataReq);
         window.location.href = response.data.url;

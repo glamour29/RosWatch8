@@ -29,8 +29,11 @@ public class CartController {
         List<CartDetailResDTO> cartDetailResDTOS = cartService.getcartDetail(request);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(Map.of("status", "success",
-                        "data", cartDetailResDTOS));
+                .body(Map.of(
+                        "status", "success",
+                        // Map.of không chấp nhận value null, nên đảm bảo luôn trả về list (rỗng nếu không có item)
+                        "data", cartDetailResDTOS != null ? cartDetailResDTOS : List.of()
+                ));
     }
 
     @PostMapping("/")

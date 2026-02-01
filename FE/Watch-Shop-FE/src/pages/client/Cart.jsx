@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { AiFillDelete } from 'react-icons/ai';
 import requestHandler from '../../utils/requestHandle';
 import requestHandle from '../../utils/requestHandle';
-import { lamTronGia } from '../../utils/functionCommon';
+import { lamTronGia, getImageUrl } from '../../utils/functionCommon';
 import { setCountCart } from '../../utils/counterCartSlice';
 
 const Cart = () => {
@@ -92,7 +92,7 @@ const Cart = () => {
         </div>
         <div className='w-1/5'>
           <img
-            src={`http://localhost:8080/image/${item.products.images[0]?.source}`}
+            src={getImageUrl(item.products.images[0]?.source)}
             alt=''
             className='w-16 h-16'
           />

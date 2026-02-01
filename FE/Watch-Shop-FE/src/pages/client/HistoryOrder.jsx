@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { CgDanger } from 'react-icons/cg';
 import { FcCancel } from 'react-icons/fc';
 import requestHandler from '../../utils/requestHandle';
-import { lamTronGia } from '../../utils/functionCommon';
+import { lamTronGia, getImageUrl } from '../../utils/functionCommon';
 
 const HistoryOrder = () => {
   const [orders, setOrders] = useState([]);
@@ -40,7 +40,7 @@ const HistoryOrder = () => {
         className='flex justify-between items-center mb-2'
       >
         <img
-          src={`http://localhost:8080/image/${item.products.images[0]?.source}`}
+          src={getImageUrl(item.products.images[0]?.source)}
           alt={item.products.name}
           className='w-16 h-16 object-cover'
         />

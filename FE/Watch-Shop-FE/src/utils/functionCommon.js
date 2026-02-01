@@ -22,4 +22,15 @@ function formatPhoneNumber(phoneNumber) {
   return phoneNumber;
 }
 
-export { lamTronGia, isUserLogin, formatPhoneNumber };
+// Helper function để lấy image URL (hỗ trợ cả localhost và production)
+const getImageUrl = (imagePath) => {
+  const baseUrl = process.env.REACT_APP_IMAGE_URL || 'http://localhost:8080';
+  if (!imagePath) return '';
+  // Nếu imagePath đã có http/https thì return luôn
+  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+    return imagePath;
+  }
+  return `${baseUrl}/image/${imagePath}`;
+};
+
+export { lamTronGia, isUserLogin, formatPhoneNumber, getImageUrl };

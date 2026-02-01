@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import requestHandle from '../../utils/requestHandle';
-import { lamTronGia, formatPhoneNumber } from '../../utils/functionCommon';
+import { lamTronGia, formatPhoneNumber, getImageUrl } from '../../utils/functionCommon';
 import Swal from 'sweetalert2';
 import requestHandler from '../../utils/requestHandle';
 
@@ -91,7 +91,7 @@ const OrderDetail = () => {
       >
         <div className='bg-blue-400 basis-1/5 relative'>
           <img
-            src={`http://localhost:8080/image/${item.products.images[0]?.source}`}
+            src={getImageUrl(item.products.images[0]?.source)}
             alt='img product'
           />
           {item.products.discount > 0 && (

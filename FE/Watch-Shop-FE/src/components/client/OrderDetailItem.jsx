@@ -1,5 +1,5 @@
 import React from 'react';
-import { lamTronGia } from '../../utils/functionCommon';
+import { lamTronGia, getImageUrl } from '../../utils/functionCommon';
 
 const OrderDetailItem = ({ item }) => {
   const caculateTotal = (price, quantity, discount) => {
@@ -10,7 +10,7 @@ const OrderDetailItem = ({ item }) => {
     <div className='flex gap-5 my-5 items-center'>
       <div className='bg-blue-400 basis-1/5 relative'>
         <img
-          src={`http://localhost:8080/image/${item.products.images[0]?.source}`}
+          src={getImageUrl(item.products.images[0]?.source)}
           alt='img product'
         />
         {item.discount > 0 && (

@@ -23,6 +23,9 @@ public class JwtServiceImpl implements JwtService {
     private final Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY.getBytes());
 
     public String extractEmail(String token) {
+            if (token == null || token.isBlank()) {
+        return null;
+            }
         return decodeJWT(token).getSubject();
     }
 
@@ -43,9 +46,12 @@ public class JwtServiceImpl implements JwtService {
         return verifier.verify(token);
     }
 
+
     public Boolean isValidToken(String token, Users user) {
-        return extractEmail(token)
-                .equals(user.getEmail()) && !isTokenExpired(token);
+            String email = extractEmail(token);
+            if (email == null) return false;
+
+            return email.equals(user.getEmail()) && !isTokenExpired(token);
     }
 
     public Boolean isTokenExpired(String token) {
@@ -79,10 +85,10 @@ public class JwtServiceImpl implements JwtService {
 
     public String getTokenFromRequest(HttpServletRequest request) {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
-        String token = "";
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer")) {
-            token = authorizationHeader.substring("Bearer".length() + 1);
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return authorizationHeader.substring(7); // Bỏ chính xác "Bearer " (có khoảng trắng)
         }
-        return token;
+        return null; // hoặc throw exception nếu bạn muốn bắt lỗi sớm
     }
+
 }

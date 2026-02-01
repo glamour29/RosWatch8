@@ -10,7 +10,7 @@ import RatingStar from '../../components/client/RatingStar';
 import requestHandle from '../../utils/requestHandle';
 import requestHandler from '../../utils/requestHandle';
 import { setCountCart } from '../../utils/counterCartSlice';
-import { isUserLogin, lamTronGia } from '../../utils/functionCommon';
+import { isUserLogin, lamTronGia, getImageUrl } from '../../utils/functionCommon';
 
 const carouselSettings = {
   dots: true,
@@ -103,7 +103,7 @@ const ProductDetail = () => {
         <div className='overflow-hidden'>
           <img
             // src={product.imageSource}
-            src={`http://localhost:8080/image/${product.imageSource}`}
+            src={getImageUrl(product.imageSource)}
             alt={product.name}
             className='hover:scale-110 duration-200 ease-linear cursor-pointer'
             onClick={() => {
@@ -123,7 +123,7 @@ const ProductDetail = () => {
       <div className='bg-white p-8 rounded-lg shadow-lg grid grid-cols-1 md:grid-cols-2 gap-8'>
         <div>
           <img
-            src={`http://localhost:8080/image/${productDetail?.imageSource[0]}`}
+            src={getImageUrl(productDetail?.imageSource[0])}
             alt='Hình ảnh sản phẩm'
             className='w-full'
           />
