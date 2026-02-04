@@ -12,11 +12,11 @@ const LayoutAdmin = () => {
 
   return (
     <>
-      <div className='flex'>
-        <div className='w-380px fixed top-0 left-0'>
+      <div className='flex min-h-screen'>
+        <div className='w-380px flex-shrink-0 fixed top-0 left-0 h-full'>
           <Siderbar />
         </div>
-        <div className='ml-380px p-10 w-full'>
+        <div className='ml-380px flex-1 min-w-0 p-10 overflow-x-hidden'>
           <Outlet />
         </div>
       </div>

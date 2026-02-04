@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
-import requestHandle from '../../utils/requestHandle';
+import requestHandler from '../../utils/requestHandle';
 import { lamTronGia, formatPhoneNumber, getImageUrl } from '../../utils/functionCommon';
 import Swal from 'sweetalert2';
-import requestHandler from '../../utils/requestHandle';
 
 const INIT_USER = {
   id: 0,
@@ -25,12 +24,11 @@ const OrderDetail = () => {
 
   useEffect(() => {
     fetchOrderDetails();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchOrderDetails = async () => {
     try {
-      const response = await requestHandle.get(`order/order-detail/${id}`);
+      const response = await requestHandler.get(`order/order-detail/${id}`);
       const data = await response.data.data;
       setOrderDetai(data);
       await fetchUser(data[0].userId);
@@ -41,9 +39,8 @@ const OrderDetail = () => {
 
   const fetchUser = async (idUser) => {
     try {
-      const response = await requestHandle.get(`users/${idUser}`);
+      const response = await requestHandler.get(`users/${idUser}`);
       const data = await response.data.data;
-      // console.log(data);
       setUser(data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -63,11 +60,11 @@ const OrderDetail = () => {
           cancelButtonText: 'Huỷ',
         }).then((result) => {
           if (result.isDenied) {
-            requestHandle.put('order/', dataReq).then(() => navigate('/admin/orders'));
+            requestHandler.put('order/', dataReq).then(() => navigate('/admin/orders'));
           }
         });
       } else {
-        await requestHandle.put('order/', dataReq);
+        await requestHandler.put('order/', dataReq);
         navigate('/admin/orders');
       }
     } catch (error) {

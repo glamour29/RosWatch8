@@ -13,8 +13,8 @@ import java.util.*;
 @Configuration
 public class VnPayConfig {
     public static String vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static String vnp_TmnCode = "6N6AD5QM";
-    public static String vnp_HashSecret = "WKUCNGIJVFLJSNNCSKLLIZSCJWSMRUAD";
+    public static String vnp_TmnCode = "3QF21UYV";
+    public static String vnp_HashSecret = "5F80DWXICYF13YIBOLMAK2YGH0VPK1V1";
     public static String vnp_apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
     public static String vnp_Version = "2.1.0";
     public static String vnp_Command = "pay";
@@ -35,7 +35,6 @@ public class VnPayConfig {
         return digest;
     }
 
-    //Util for VNPAY
     public static String hashAllFields(Map<String, String> fields) {
         List<String> fieldNames = new ArrayList<>(fields.keySet());
         Collections.sort(fieldNames);

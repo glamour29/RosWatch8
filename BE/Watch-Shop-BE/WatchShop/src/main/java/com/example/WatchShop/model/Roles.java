@@ -19,7 +19,4 @@ public class Roles {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-
-//  @OneToMany(mappedBy = "roles")
-//  private List<Users> users;
 }

@@ -24,7 +24,7 @@ export default function About() {
                     >
                       <path d='M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 9 7.558V11a1 1 0 0 0 1 1h2Zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z'></path>
                     </svg>{' '}
-                    Successfully Providing business solutions from 25 years
+                    Đồng hành cùng giải pháp kinh doanh hơn 25 năm
                   </p>
                 </div>
               </div>
@@ -35,26 +35,20 @@ export default function About() {
                   Who we are?
                 </span>
                 <h1 className='mt-2 text-3xl font-black text-gray-700 md:text-5xl dark:text-gray-300'>
-                  About Us
+                  Giới thiệu
                 </h1>
               </div>
               <p className='mb-6 text-base leading-7 text-gray-500 dark:text-gray-400'>
-                Established in 1998 in New York,ROSWATCH is a genuine watch business that works
-                directly with major watch brands to get the most competitive prices. Compared to
-                prices at watch stores in Vietnam, we guarantee prices will be 30-90% lower. This is
-                an extremely economical choice for watch enthusiasts and lovers.
+                Thành lập từ năm 1998, ROSWATCH là doanh nghiệp đồng hồ chính hãng làm việc trực tiếp với các thương hiệu lớn để mang lại mức giá cạnh tranh nhất. So với giá tại các cửa hàng đồng hồ tại Việt Nam, chúng tôi cam kết giá thấp hơn 30–90%. Đây là lựa chọn tiết kiệm cho người yêu đồng hồ.
               </p>
               <p className='mb-6 text-base leading-7 text-gray-500 dark:text-gray-400'>
-                ROSWATCH is in the top 10 most trusted e-commerce websites . With more than 20
-                years of efforts in the watch industry, this is a very remarkable assessment. And as
-                a promise, ROSWATCH Vietnam will also do its best to bring such great quality to
-                watch "fans" in Vietnam.
+                ROSWATCH nằm trong top 10 website thương mại điện tử đáng tin cậy. Với hơn 20 năm nỗ lực trong ngành đồng hồ, đây là đánh giá rất đáng ghi nhận. Và như một lời hứa, ROSWATCH Việt Nam sẽ luôn cố gắng mang chất lượng tuyệt vời đến người dùng đồng hồ tại Việt Nam.
               </p>
               <Link
                 to='/client'
                 className='px-4 py-2 text-gray-100 bg-red-500 rounded dark:bg-red-400 dark:hover:bg-red-500 hover:bg-red-600'
               >
-                Learn more
+                Xem thêm
               </Link>
             </div>
           </div>
@@ -72,12 +66,10 @@ export default function About() {
           <div className='flex flex-wrap items-center'>
             <div className='w-full px-4 mb-10 md:w-1/2 lg:mb-0 '>
               <h2 className='mb-4 text-2xl font-bold text-gray-700 dark:text-gray-300'>
-                We are providing a better facility
+                Chúng tôi mang đến dịch vụ tốt hơn
               </h2>
               <p className='mb-4 text-base leading-7 text-gray-500 dark:text-gray-400'>
-                With many years of experience distributing ROSWATCH products. ROSWATCH Vietnam
-                is a watch business, not a shipping company, so the products reaching you will be
-                guaranteed in the best conditions, without fear of swapping or exchanging goods.
+                Với nhiều năm kinh nghiệm phân phối sản phẩm ROSWATCH. ROSWATCH Việt Nam là doanh nghiệp đồng hồ, không phải đơn vị vận chuyển, nên sản phẩm đến tay bạn luôn được đảm bảo trong điều kiện tốt nhất, không lo đổi trả hay hàng kém chất lượng.
               </p>
               <ul className='mb-10'>
                 <li className='flex items-center mb-4 text-base text-gray-600 dark:text-gray-400'>
@@ -93,7 +85,7 @@ export default function About() {
                       <path d='M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z' />
                     </svg>
                   </span>
-                  Art and Programs
+                  Sản phẩm & Chương trình
                 </li>
                 <li className='flex items-center mb-4 text-base text-gray-600 dark:text-gray-400'>
                   <span className='mr-3 text-red-500 dark:text-red-400'>
@@ -108,7 +100,7 @@ export default function About() {
                       <path d='M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z' />
                     </svg>
                   </span>
-                  Value for money
+                  Giá trị đồng tiền
                 </li>
                 <li className='flex items-center mb-4 text-base text-gray-600 dark:text-gray-400'>
                   <span className='mr-3 text-red-500 dark:text-red-400'>
@@ -123,7 +115,7 @@ export default function About() {
                       <path d='M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z' />
                     </svg>
                   </span>
-                  Support Team
+                  Đội ngũ hỗ trợ
                 </li>
                 <li className='flex items-center mb-4 text-base text-gray-600 dark:text-gray-400'>
                   <span className='mr-3 text-red-500 dark:text-red-400 '>
@@ -138,14 +130,14 @@ export default function About() {
                       <path d='M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z' />
                     </svg>
                   </span>
-                  Successful Growth for business
+                  Phát triển bền vững cho doanh nghiệp
                 </li>
               </ul>
               <Link
                 to='/client'
                 className='px-4 py-2 text-gray-100 bg-red-500 rounded-md dark:bg-red-400 dark:hover:bg-red-500 hover:bg-red-600'
               >
-                Learn more
+                Xem thêm
               </Link>
             </div>
             <div className='relative w-full px-4 mb-10 md:w-1/2 lg:mb-0'>

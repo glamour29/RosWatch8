@@ -84,7 +84,6 @@ const Products = () => {
     try {
       const response = await requestHandler.get('product/');
       const data = await response.data.data;
-      // console.log(data);
       setProducts(data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -164,7 +163,6 @@ const Products = () => {
     return formData;
   };
 
-  // render options
   const renderOptions = () => {
     return brands.map((brand) => (
       <option
@@ -200,7 +198,6 @@ const Products = () => {
         <td>
           <p className='w-[250px] overflow-hidden overflow-ellipsis'>{product.name}</p>
         </td>
-        {/* <td className=''></td> */}
         <td className='text-center'>{product.price.toLocaleString()} vnd</td>
         <td className='text-center'>{product.discount}%</td>
         <td className='text-center'>{product.quantity}</td>
@@ -227,8 +224,8 @@ const Products = () => {
 
   return (
     <>
-      <main className='flex-1 overflow-y-auto pt-8 px-6 bg-base-200'>
-        <div className='card w-full p-6 bg-base-100 shadow-xl mt-2'>
+      <main className='flex-1 overflow-y-auto overflow-x-hidden pt-8 px-6 bg-base-200'>
+        <div className='card w-full max-w-full p-6 bg-base-100 shadow-xl mt-2 min-w-0'>
           <div className='text-xl font-semibold inline-block'>
             Products
             <div className='inline-block float-right'>
@@ -243,9 +240,9 @@ const Products = () => {
             </div>
           </div>
           <div className='divider mt-2'></div>
-          <div className='h-full w-full pb-6 bg-base-100'>
-            <div className='overflow-x-auto w-full'>
-              <table className='table w-full'>
+          <div className='h-full w-full pb-6 bg-base-100 min-w-0'>
+            <div className='overflow-x-auto overflow-y-visible w-full max-w-full rounded-lg border border-base-300'>
+              <table className='table w-full min-w-[800px]'>
                 <thead>
                   <tr>
                     <th className='w-36 text-center'>image</th>
@@ -261,28 +258,28 @@ const Products = () => {
                 </thead>
                 <tbody>{renderProducts()}</tbody>
               </table>
-              <ReactPaginate
-                breakLabel='...'
-                className='flex justify-center items-center gap-3 my-6 float-right mr-5'
-                pageRangeDisplayed={3}
-                pageCount={pageCount}
-                marginPagesDisplayed={10}
-                pageClassName='border border-solid w-10 h-10 rounded-md hover:bg-main-red hover:text-white cursor-pointer flex'
-                pageLinkClassName='py-2 px-4'
-                activeClassName='bg-main-red text-white'
-                onPageChange={handlePageChange}
-                nextLabel={
-                  <span className='w-10 h-10 flex items-center justify-center bg-white rounded-md border border-solid'>
-                    <GrNext />
-                  </span>
-                }
-                previousLabel={
-                  <span className='w-10 h-10 flex items-center justify-center bg-white rounded-md border border-solid'>
-                    <GrPrevious />
-                  </span>
-                }
-              />
             </div>
+            <ReactPaginate
+              breakLabel='...'
+              className='flex justify-center items-center gap-3 my-6'
+              pageRangeDisplayed={3}
+              pageCount={pageCount}
+              marginPagesDisplayed={10}
+              pageClassName='border border-solid w-10 h-10 rounded-md hover:bg-main-red hover:text-white cursor-pointer flex'
+              pageLinkClassName='py-2 px-4'
+              activeClassName='bg-main-red text-white'
+              onPageChange={handlePageChange}
+              nextLabel={
+                <span className='w-10 h-10 flex items-center justify-center bg-white rounded-md border border-solid'>
+                  <GrNext />
+                </span>
+              }
+              previousLabel={
+                <span className='w-10 h-10 flex items-center justify-center bg-white rounded-md border border-solid'>
+                  <GrPrevious />
+                </span>
+              }
+            />
           </div>
         </div>
         <div className='h-16'></div>

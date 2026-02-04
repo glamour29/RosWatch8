@@ -23,19 +23,19 @@ const Register = () => {
   const today = new Date();
 
   const validationSchema = Yup.object().shape({
-    fullName: Yup.string().required('Fullname is required'),
+    fullName: Yup.string().required('Vui lòng nhập họ tên'),
     birthDate: Yup.date()
-      .max(today, 'Birthdate must be earlier than today')
-      .required('Birthday is required'),
+      .max(today, 'Ngày sinh phải trước hôm nay')
+      .required('Vui lòng nhập ngày sinh'),
     phone: Yup.string()
-      .matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/, 'Invalid phone number')
-      .required('Phone is required'),
-    address: Yup.string().required('Address is required'),
-    email: Yup.string().email('Invalid email').required('Email is required'),
-    password: Yup.string().required('Password is required'),
+      .matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/, 'Số điện thoại không hợp lệ')
+      .required('Vui lòng nhập số điện thoại'),
+    address: Yup.string().required('Vui lòng nhập địa chỉ'),
+    email: Yup.string().email('Email không hợp lệ').required('Vui lòng nhập email'),
+    password: Yup.string().required('Vui lòng nhập mật khẩu'),
     rePassword: Yup.string()
-      .oneOf([Yup.ref('password'), null], 'Passwords must match')
-      .required('Confirm Password is required'),
+      .oneOf([Yup.ref('password'), null], 'Mật khẩu xác nhận không khớp')
+      .required('Vui lòng nhập lại mật khẩu'),
   });
 
   const handleRegister = async (values) => {
@@ -51,7 +51,7 @@ const Register = () => {
         setType('error');
       }
     } catch (err) {
-      setMessage('Email already existed!');
+      setMessage('Email đã tồn tại!');
       setType('error');
     }
   };
@@ -63,7 +63,7 @@ const Register = () => {
           className='bg-cover bg-center bg-gray-400 py-16'
           style={{ backgroundImage: `url(${undraw})` }}
         >
-          <h1 className='text-4xl text-white font-bold uppercase text-center p-4'>Register</h1>
+          <h1 className='text-4xl text-white font-bold uppercase text-center p-4'>Đăng ký</h1>
         </div>
         <Formik
           initialValues={initialValues}
@@ -83,14 +83,14 @@ const Register = () => {
                 className='text-[#808080] text-sm font-bold self-center'
                 htmlFor='fullName'
               >
-                Full Name
+                Họ và tên
               </label>
               <Field
                 type='text'
                 id='fullName'
                 name='fullName'
                 className='w-full border-b-2 border-gray-300 py-2 focus:outline-none focus:border-b-2 focus:border-main-red'
-                placeholder='Enter full name'
+                placeholder='Nhập họ tên'
               />
               <ErrorMessage
                 name='fullName'
@@ -105,7 +105,7 @@ const Register = () => {
                   className='text-[#808080] text-sm font-bold self-center'
                   htmlFor='birthDate'
                 >
-                  Birthday
+                  Ngày sinh
                 </label>
                 <Field
                   type='date'
@@ -125,14 +125,14 @@ const Register = () => {
                   className='text-[#808080] text-sm font-bold self-center mb-3'
                   htmlFor='phone'
                 >
-                  Phone
+                  Số điện thoại
                 </label>
                 <Field
                   type='text'
                   id='phone'
                   name='phone'
                   className='w-full border-b-2 border-gray-300 py-2 focus:outline-none focus:border-b-2 focus:border-main-red'
-                  placeholder='Enter phone'
+                  placeholder='Nhập số điện thoại'
                 />
                 <ErrorMessage
                   name='phone'
@@ -147,14 +147,14 @@ const Register = () => {
                 className='text-[#808080] text-sm font-bold self-center'
                 htmlFor='address'
               >
-                Address
+                Địa chỉ
               </label>
               <Field
                 type='text'
                 id='address'
                 name='address'
                 className='w-full border-b-2 border-gray-300 py-2 focus:outline-none focus:border-b-2 focus:border-main-red'
-                placeholder='Enter address'
+                placeholder='Nhập địa chỉ'
               />
               <ErrorMessage
                 name='address'
@@ -175,7 +175,7 @@ const Register = () => {
                 id='email'
                 name='email'
                 className='w-full border-b-2 border-gray-300 py-2 focus:outline-none focus:border-b-2 focus:border-main-red'
-                placeholder='Enter email'
+                placeholder='Nhập email'
               />
               <ErrorMessage
                 name='email'
@@ -190,14 +190,14 @@ const Register = () => {
                   className='block text-[#808080] text-sm font-bold self-center'
                   htmlFor='password'
                 >
-                  Password
+                  Mật khẩu
                 </label>
                 <Field
                   type='password'
                   id='password'
                   name='password'
                   className='w-full border-b-2 border-gray-300 py-2 focus:outline-none focus:border-b-2 focus:border-main-red'
-                  placeholder='Enter password'
+                  placeholder='Nhập mật khẩu'
                 />
                 <ErrorMessage
                   name='password'
@@ -210,14 +210,14 @@ const Register = () => {
                   className='block text-[#808080] text-sm font-bold self-center'
                   htmlFor='rePassword'
                 >
-                  Re-Password
+                  Xác nhận mật khẩu
                 </label>
                 <Field
                   type='password'
                   id='rePassword'
                   name='rePassword'
                   className='w-full border-b-2 border-gray-300 py-2 focus:outline-none focus:border-b-2 focus:border-main-red'
-                  placeholder='Enter re-password'
+                  placeholder='Nhập lại mật khẩu'
                 />
                 <ErrorMessage
                   name='rePassword'
@@ -231,16 +231,16 @@ const Register = () => {
                 type='submit'
                 className='w-full col-span-7 bg-main-red text-white font-bold py-2 rounded-full hover-bg-main-black'
               >
-                Register
+                Đăng ký
               </button>
             </div>
             <div className='col-span-2 text-right text-sm'>
-              <span className=''>Already have an account? </span>
+              <span className=''>Đã có tài khoản? </span>
               <Link
                 to='/login'
                 className='text-[#999999] font-bold'
               >
-                Login
+                Đăng nhập
               </Link>
             </div>
           </Form>

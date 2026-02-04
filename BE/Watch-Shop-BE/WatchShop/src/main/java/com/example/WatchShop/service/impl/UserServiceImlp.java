@@ -51,14 +51,11 @@ public class UserServiceImlp implements UserService {
         users.setFullName(usersDTO.getFullName());
         users.setBirthDate(usersDTO.getBirthDate());
         users.setAddress(usersDTO.getAddress());
-        // encrypt the password hash
         users.setPassword(encoder.encode(usersDTO.getPassword()));
         users.setEmail(usersDTO.getEmail());
         users.setPhone(usersDTO.getPhone());
-
-        // Create Role_User
-        Roles roles = rolesRepository.findByName("ROLE_USER");
-        users.setRoles(roles);
+        users.setRoles(getOrCreateRoleUser());
+        users.setIsDeleted(false);
         usersRepository.save(users);
     }
 
@@ -120,7 +117,6 @@ public class UserServiceImlp implements UserService {
         return usersRepository.existsByEmail(email);
     }
 
-    // Send email
     public void sendEmail(Users user, String subject, String emailContent) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -178,10 +174,33 @@ public class UserServiceImlp implements UserService {
     }
 
     @Override
+    public Roles getOrCreateRoleUser() {
+        Roles role = rolesRepository.findByName("ROLE_USER");
+        if (role == null) {
+            role = rolesRepository.save(Roles.builder().name("ROLE_USER").build());
+            rolesRepository.save(Roles.builder().name("ROLE_ADMIN").build());
+        }
+        return role;
+    }
+
+    @Override
+    public void ensureUserHasRole(Users user) {
+        if (user != null && user.getRoles() == null) {
+            user.setRoles(getOrCreateRoleUser());
+            usersRepository.save(user);
+        }
+    }
+
+    @Override
     public void updateRole(Long id) {
         Optional<Users> user = usersRepository.findById(id);
         if (user.isPresent()) {
             Users users = user.get();
+            if (users.getRoles() == null) {
+                users.setRoles(getOrCreateRoleUser());
+                usersRepository.save(users);
+                return;
+            }
             Roles role = null;
             String roleName = users.getRoles().getName();
             if ("ROLE_ADMIN".equals(roleName)) {

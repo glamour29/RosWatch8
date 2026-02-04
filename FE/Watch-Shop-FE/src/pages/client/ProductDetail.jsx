@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
 import { ToastContainer, toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'react-toastify/dist/ReactToastify.css';
 import RatingStar from '../../components/client/RatingStar';
-import requestHandle from '../../utils/requestHandle';
 import requestHandler from '../../utils/requestHandle';
 import { setCountCart } from '../../utils/counterCartSlice';
 import { isUserLogin, lamTronGia, getImageUrl } from '../../utils/functionCommon';
@@ -30,6 +29,7 @@ const ProductDetail = () => {
   const [idProduct, setIdProduct] = useState(id);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const counterCart = useSelector((state) => state.counterCart.value);
 
   const notify = () => toast('🙌 Thêm sản phẩm thành công !');
 
@@ -37,15 +37,13 @@ const ProductDetail = () => {
     window.scrollTo(0, 0);
     fetchProduct();
     getRatingByUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idProduct]);
 
   const fetchProduct = async () => {
     try {
-      const response = await requestHandle.get(`product/${id}`);
+      const response = await requestHandler.get(`product/${id}`);
       const data = await response.data;
       setProductDetail(data);
-      // console.log(data);
       setSameBrandProducts(data.sameBrandProducts);
     } catch (err) {
       console.log(err);
@@ -57,7 +55,7 @@ const ProductDetail = () => {
     const user_id = localStorage.getItem('user_id');
     try {
       const config = { params: { userId: user_id, productId: id } };
-      const response = await requestHandle.get('rating/', config);
+      const response = await requestHandler.get('rating/', config);
       const star = await response.data.data.star;
       setGetRating(star);
       console.log('getStar', star);
@@ -77,18 +75,15 @@ const ProductDetail = () => {
     setQuantity(value);
   };
 
-  const addToCart = async (prod, quantity = 1) => {
+  const addToCart = async (prod, qty = 1) => {
     const id_user = JSON.parse(localStorage.getItem('user_id'));
     if (isUserLogin()) {
       try {
-        const dataReq = { userId: id_user, productId: prod.id, amount: quantity };
+        const dataReq = { userId: id_user, productId: prod.id, amount: qty };
         await requestHandler.post('cart/', dataReq);
         notify();
-        // console.log('them gio hang thanh cong', response.data);
-
-        const res = await requestHandler.get('cart/');
-        const carts = await res.data.data;
-        // dispatch(setCountCart(carts.length));
+        const current = counterCart ?? 0;
+        dispatch(setCountCart(current + qty));
       } catch (e) {
         console.error(e);
       }
@@ -102,7 +97,6 @@ const ProductDetail = () => {
       <div key={product.id}>
         <div className='overflow-hidden'>
           <img
-            // src={product.imageSource}
             src={getImageUrl(product.imageSource)}
             alt={product.name}
             className='hover:scale-110 duration-200 ease-linear cursor-pointer'
@@ -156,7 +150,7 @@ const ProductDetail = () => {
               Current quantity: {productDetail?.quantity} product
             </p>
             <div className='flex items-center py-4'>
-              <p className='text-black-600 font-bold'>Quantity:</p>
+              <p className='text-black-600 font-bold'>Số lượng:</p>
               <input
                 type='number'
                 className='w-24 py-2 px-3 border border-gray-300 rounded ml-3'
@@ -170,7 +164,7 @@ const ProductDetail = () => {
                 className='bg-main-black text-white py-3 px-6 hover:bg-main-red flex-1 mx-2 h-16 font-bold'
                 onClick={() => addToCart(productDetail, quantity)}
               >
-                ADD TO CART
+                Thêm vào giỏ hàng
               </button>
             </div>
           </div>
@@ -181,7 +175,7 @@ const ProductDetail = () => {
                 alt='oclock'
                 className='w-6 h-6 mr-2'
               />
-              Authenticated Collector Quality
+              Chất lượng chính hãng
             </h1>
             <h1 className='flex items-center text-lg'>
               <img
@@ -189,7 +183,7 @@ const ProductDetail = () => {
                 alt='oclock'
                 className='w-6 h-6 mr-2'
               />
-              Free Expedited Shipping
+              Giao hàng nhanh
             </h1>
             <h1 className='flex items-center text-lg'>
               <img
@@ -197,11 +191,11 @@ const ProductDetail = () => {
                 alt='oclock'
                 className='w-6 h-6 mr-2'
               />
-              2-Year WatchBox Warranty
+              Bảo hành 2 năm
             </h1>
           </div>
           <div className=' mb-4 mt-8'>
-            <h1 className='text-2xl font-semibold '>Description</h1>
+            <h1 className='text-2xl font-semibold '>Mô tả</h1>
             <p>{productDetail?.description}</p>
           </div>
           <div className=' mb-4 mt-8'>
@@ -239,8 +233,7 @@ const ProductDetail = () => {
         </div>
       </div>
       <div className='bg-white p-8 rounded-lg shadow-lg mt-4 mb-5'>
-        {/* sản phẩm tương tự*/}
-        <h1 className='text-3xl font-semibold mb-4'>Similar product</h1>
+        <h1 className='text-3xl font-semibold mb-4'>Sản phẩm tương tự</h1>
         <Slider {...carouselSettings}>{renderProductList()}</Slider>
       </div>
     </div>

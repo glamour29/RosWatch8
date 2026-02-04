@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AiFillDelete } from 'react-icons/ai';
 import requestHandler from '../../utils/requestHandle';
-import requestHandle from '../../utils/requestHandle';
 import { lamTronGia, getImageUrl } from '../../utils/functionCommon';
 import { setCountCart } from '../../utils/counterCartSlice';
 
@@ -15,7 +14,6 @@ const Cart = () => {
 
   useEffect(() => {
     fetchCart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchCart = async () => {
@@ -23,11 +21,12 @@ const Cart = () => {
     if (isLogin) {
       try {
         const response = await requestHandler.get('cart/');
-        const data = await response.data.data;
-        setCart(data);
-        // dispatch(setCountCart(data.length));
+        const data = response?.data?.data;
+        const list = Array.isArray(data) ? data : [];
+        setCart(list);
+        dispatch(setCountCart(list.length));
         let totalAmount = 0;
-        for (const item of data) {
+        for (const item of list) {
           totalAmount += item.quantity * item.products.price;
         }
         setTotal(totalAmount);
@@ -41,8 +40,6 @@ const Cart = () => {
 
   const deleteCart = async (prodId) => {
     const user_id = JSON.parse(localStorage.getItem('user_id'));
-    // console.log(user_id);
-    // console.log(prodId.products.id);
     try {
       const dataReq = { data: { userId: user_id, productId: prodId.products.id } };
       await requestHandler.delete('cart/', dataReq);
@@ -54,11 +51,9 @@ const Cart = () => {
 
   const increaseQuantity = async (prod) => {
     const id_user = JSON.parse(localStorage.getItem('user_id'));
-    // console.log(prod);
     try {
       const dataReq = { userId: id_user, productId: prod.products.id, amount: 1 };
-      await requestHandle.post('cart/', dataReq);
-      // console.log('success', response.data);
+      await requestHandler.post('cart/', dataReq);
       fetchCart();
     } catch (error) {
       console.log(error);
@@ -66,12 +61,19 @@ const Cart = () => {
   };
 
   const decreaseQuantity = async (prod) => {
+    if (prod.quantity <= 1) {
+      const confirmRemove = window.confirm(
+        'Bạn có muốn xóa mặt hàng này khỏi giỏ hàng?'
+      );
+      if (confirmRemove) {
+        await deleteCart(prod);
+      }
+      return;
+    }
     const id_user = JSON.parse(localStorage.getItem('user_id'));
-    // console.log(prod);
     try {
       const dataReq = { userId: id_user, productId: prod.products.id, amount: -1 };
-      await requestHandle.post('cart/', dataReq);
-      // console.log('success', response.data);
+      await requestHandler.post('cart/', dataReq);
       fetchCart();
     } catch (error) {
       console.log(error);
@@ -145,26 +147,26 @@ const Cart = () => {
   return (
     <div className='w-container mx-auto mt-8'>
       <div className='bg-white p-8 rounded-lg shadow-lg'>
-        <h2 className='text-3xl font-semibold mb-4 text-center'>Your cart</h2>
+        <h2 className='text-3xl font-semibold mb-4 text-center'>Giỏ hàng của bạn</h2>
         <div className='bg-white p-6 shadow-md rounded-lg'>
           <div className='flex justify-center border-b border-gray-300 p-3 bg-slate-400'>
             <div className='w-2/5'>
-              <p className='font-semibold'>Product</p>
+              <p className='font-semibold'>Sản phẩm</p>
             </div>
             <div className='w-1/5'>
-              <p className='font-semibold'>Image</p>
+              <p className='font-semibold'>Hình ảnh</p>
             </div>
             <div className='w-1/5'>
-              <p className='font-semibold'>Quantity</p>
+              <p className='font-semibold'>Số lượng</p>
             </div>
             <div className='w-1/5'>
-              <p className='font-semibold'>Price</p>
+              <p className='font-semibold'>Đơn giá</p>
             </div>
             <div className='w-1/5'>
-              <p className='font-semibold'>Total</p>
+              <p className='font-semibold'>Thành tiền</p>
             </div>
             <div className='w-1/5'>
-              <p className='font-semibold'>Action</p>
+              <p className='font-semibold'>Thao tác</p>
             </div>
           </div>
 
@@ -193,7 +195,7 @@ const Cart = () => {
       </div>
       <div className='bg-white p-8 rounded-lg shadow-lg mt-4 mb-4'>
         <h2 className='text-3xl font-semibold mb-4 border-b-2 border-main-red py-3'>
-          Today's offer
+          Ưu đãi hôm nay
         </h2>
         <div className='flex'>
           <img

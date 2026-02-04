@@ -29,7 +29,6 @@ const Users = () => {
     try {
       const response = await requestHandler.get('users');
       const data = await response.data.data;
-      // console.log(data);
       setUsers(data);
     } catch (error) {
       console.error('Error fetching data:', error);

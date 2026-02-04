@@ -18,8 +18,6 @@ public class MailConfig {
     @Bean
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        
-        // Read from environment with defaults
         mailSender.setHost(env.getProperty("spring.mail.host", "smtp.gmail.com"));
         mailSender.setPort(Integer.parseInt(env.getProperty("spring.mail.port", "587")));
         mailSender.setUsername(env.getProperty("spring.mail.username", "anki.llw.org@gmail.com"));

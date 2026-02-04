@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import ReactLoading from 'react-loading';
 import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -69,20 +69,21 @@ export default function App() {
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.counterCart.isLoading);
 
-  useEffect(() => {
-    fetchCountCart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const fetchCountCart = async () => {
+  const fetchCountCart = useCallback(async () => {
     try {
       const response = await requestHandler.get('cart/');
-      const carts = await response.data.data;
-      // dispatch(setCountCart(carts.length));
-    } catch (err) {
-      console.error(err);
+      const carts = response?.data?.data;
+      const count = Array.isArray(carts) ? carts.length : 0;
+      dispatch(setCountCart(count));
+    } catch {
+      dispatch(setCountCart(0));
     }
-  };
+  }, [dispatch]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) fetchCountCart();
+  }, [fetchCountCart]);
 
   const renderRoutes = (routes) => {
     return routes.map((route, index) => (

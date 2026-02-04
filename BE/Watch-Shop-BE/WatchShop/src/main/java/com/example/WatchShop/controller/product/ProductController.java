@@ -19,7 +19,6 @@ import java.util.Map;
 public class ProductController {
     private final ProductService productService;
 
-    //Lấy danh sách của product
     @GetMapping("/")
     ResponseEntity<?> getAllProduct(@RequestParam(value = "brandId", required = false) Long brandID) {
         log.info("getAllProduct");

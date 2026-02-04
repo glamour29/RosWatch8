@@ -8,7 +8,6 @@ const Brands = ({ handleGetProductsByBrand }) => {
 
   useEffect(() => {
     fetchBrands();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchBrands = async () => {

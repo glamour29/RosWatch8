@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api")
@@ -47,14 +48,28 @@ public class UsersController {
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@Valid @RequestBody UsersReqDTO usersDTO) {
-        log.info("loginUser");
-        Optional<Users> user = userService.getUsersByEmailAndPassword(usersDTO.getEmail(), usersDTO.getPassword());
-        if (user.isEmpty() || user.get().getIsDeleted()) {
+        log.info("loginUser email={}", usersDTO.getEmail());
+        Optional<Users> userOpt = userService.getUserByEmail(usersDTO.getEmail());
+        if (userOpt.isEmpty()) {
+            log.warn("Login fail: user not found");
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("status", "fail", "message", "Invalid email or password!"));
         }
-        // Generate access token
+        boolean passwordMatches = passwordEncoder.matches(usersDTO.getPassword(), userOpt.get().getPassword());
+        if (!passwordMatches) {
+            log.warn("Login fail: password mismatch for email={}", usersDTO.getEmail());
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("status", "fail", "message", "Invalid email or password!"));
+        }
+        Optional<Users> user = Optional.of(userOpt.get());
+        if (Boolean.TRUE.equals(user.get().getIsDeleted())) {
+            return ResponseEntity
+                    .status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("status", "fail", "message", "Account is disabled"));
+        }
+        userService.ensureUserHasRole(user.get());
         String accessToken = jwtService.generateToken(user.get(), user.get().getAuthorities());
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -64,6 +79,17 @@ public class UsersController {
                         "userID", user.get().getId(),
                         "isDeleted", user.get().getIsDeleted()
                 ));
+    }
+
+    @GetMapping("/dev/bcrypt-hash")
+    public ResponseEntity<Map<String, String>> getBcryptHash(@RequestParam(defaultValue = "123456") String password) {
+        String hash = passwordEncoder.encode(password);
+        log.info("Generated BCrypt hash for password length={}", password.length());
+        return ResponseEntity.ok(Map.of(
+                "password", password,
+                "hash", hash,
+                "sql", "UPDATE users SET password = N'" + hash + "' WHERE email = N'admin@gmail.com';"
+        ));
     }
 
     @PostMapping("/forgot-password")
@@ -110,9 +136,8 @@ public class UsersController {
         List<Users> usersList = userService.findAllUser();
         List<UserResDTO> userResDTOS = usersList
                 .stream()
-//        .filter(users -> users.getRoles().getName().equals("ROLE_USER"))
                 .map(UserResDTO::new)
-                .toList();
+                .collect(Collectors.toList());
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(Map.of("status", "success",

@@ -32,7 +32,6 @@ const OrderDetail = () => {
     window.scrollTo(0, 0);
     fetchCart();
     fetchUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchUser = async () => {
@@ -68,7 +67,6 @@ const OrderDetail = () => {
   const handlerThanhToan = async () => {
     try {
       if (typePayment === 1) {
-        // thanh toan khi nhan hang
         const idUser = Number(localStorage.getItem('user_id'));
         const orderReqDTO = { userId: idUser, status: 'waiting', total: caculateTotalPrice };
 
@@ -76,15 +74,16 @@ const OrderDetail = () => {
         await requestHandler.delete(`cart/all/${idUser}`);
         const response = await requestHandler.get('cart/');
         const carts = await response.data.data;
-        // dispatch(setCountCart(carts.length));
+        dispatch(setCountCart(carts.length));
 
         Swal.fire('Thanh toán thành công', '', 'success');
         navigate('/client/');
       } else {
-        // thanh toan online
+        const returnPath = '/#/client/order-success';
+        const baseUrl = process.env.REACT_APP_VNPAY_RETURN_BASE || window.location.origin;
         const dataReq = {
           total: caculateTotalPrice,
-          urlReturn: `${window.location.origin}/#/client/order-success`,
+          urlReturn: `${baseUrl}${returnPath}`,
         };
         const response = await requestHandler.post('vn-pay/create-payment', dataReq);
         window.location.href = response.data.url;

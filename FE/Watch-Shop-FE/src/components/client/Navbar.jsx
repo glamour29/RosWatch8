@@ -1,11 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-// navs
 const navs = [
-  { to: '/client/', text: 'Home' },
-  { to: '/client/contact', text: 'Contact' },
-  { to: '/client/about', text: 'About' },
+  { to: '/client/', text: 'Trang chủ' },
+  { to: '/client/contact', text: 'Liên hệ' },
+  { to: '/client/about', text: 'Giới thiệu' },
 ];
 
 const Navbar = () => {

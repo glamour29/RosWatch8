@@ -27,7 +27,7 @@ public class UserResDTO {
         this.address = users.getAddress();
         this.email = users.getEmail();
         this.phone = users.getPhone();
-        this.roles = users.getRoles().getName();
+        this.roles = users.getRoles() != null ? users.getRoles().getName() : "ROLE_USER";
         this.isDeleted = users.getIsDeleted();
     }
 }

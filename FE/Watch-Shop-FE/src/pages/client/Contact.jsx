@@ -41,7 +41,7 @@ const Contact = () => {
                 </svg>
               </div>
               <div className='mt-3 ml-3'>
-                <span className='text-main-black font-bold'>Phone:</span> +84 123 456 789
+                <span className='text-main-black font-bold'>Điện thoại:</span> +84 968794894
               </div>
             </p>
           </div>
@@ -57,7 +57,7 @@ const Contact = () => {
                 </svg>
               </div>
               <div className='mt-3 ml-3'>
-                <span className='text-main-black font-bold'>Address:</span> 116 Tân Chánh Hiệp, Quận 12, TP.
+                <span className='text-main-black font-bold'>Địa chỉ:</span> 116 Tân Chánh Hiệp, Quận 12, TP.
                 Hồ Chí Minh
               </div>
             </p>
@@ -74,7 +74,7 @@ const Contact = () => {
                 </svg>
               </div>
               <div className='mt-3 ml-3'>
-                <span className='text-main-black font-bold'>Email: </span>ros8255@gmail.com
+                <span className='text-main-black font-bold'>Email: </span>roswatch8255@gmail.com
               </div>
             </p>
           </div>
@@ -130,7 +130,7 @@ const Contact = () => {
             <input
               className='bg-main-red text-white py-2 px-4 rounded-lg hover:bg-main-red-dark'
               type='submit'
-              value='Send'
+              value='Gửi'
             />
           </form>
         </div>

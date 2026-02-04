@@ -15,7 +15,7 @@ import java.util.UUID;
 @Slf4j
 public final class ImageFile {
     public static final String PATH_IMAGE = "src/main/resources/static/image/";
-    public static final String URL_API_IMAGE = "http://localhost:8080/api/images/";
+    public static final String URL_API_IMAGE = "http://localhost:8080/api/image/";
 
     private ImageFile() {
     }
@@ -26,8 +26,6 @@ public final class ImageFile {
         }
 
         Path path = Paths.get(PATH_IMAGE);
-//    System.err.println(path.toAbsolutePath());
-
         InputStream inputStream = imageFile.getInputStream();
         String extension = getFileExtension(imageFile);
         String filename = randomFileName(extension);

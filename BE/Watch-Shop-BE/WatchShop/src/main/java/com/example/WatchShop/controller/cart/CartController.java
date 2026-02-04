@@ -31,7 +31,6 @@ public class CartController {
                 .status(HttpStatus.OK)
                 .body(Map.of(
                         "status", "success",
-                        // Map.of không chấp nhận value null, nên đảm bảo luôn trả về list (rỗng nếu không có item)
                         "data", cartDetailResDTOS != null ? cartDetailResDTOS : List.of()
                 ));
     }

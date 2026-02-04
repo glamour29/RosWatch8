@@ -29,8 +29,8 @@ const Login = () => {
   }, []);
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('Email is required'),
-    password: Yup.string().required('Password is required'),
+    email: Yup.string().email('Email không hợp lệ').required('Vui lòng nhập email'),
+    password: Yup.string().required('Vui lòng nhập mật khẩu'),
   });
 
   const handleLogin = async (values) => {
@@ -56,12 +56,19 @@ const Login = () => {
         setType('error');
       }
     } catch (err) {
-      const statusCode = err.response.status;
+      const statusCode = err.response?.status;
+      const serverMessage = err.response?.data?.message;
       if (statusCode === 401) {
-        setMessage('Invalid email or password!');
+        setMessage('Email hoặc mật khẩu không đúng!');
+        setType('error');
+      } else if (statusCode === 403 && serverMessage === 'Account is disabled') {
+        setMessage('Tài khoản đã bị vô hiệu hóa');
+        setType('error');
+      } else if (serverMessage) {
+        setMessage(serverMessage);
         setType('error');
       } else {
-        setMessage('Account is disabled');
+        setMessage('Đăng nhập thất bại. Vui lòng kiểm tra kết nối và thử lại.');
         setType('error');
       }
     }
@@ -74,7 +81,7 @@ const Login = () => {
           className='bg-cover bg-center bg-gray-400 py-16'
           style={{ backgroundImage: `url(${undraw})` }}
         >
-          <h1 className='text-4xl text-white font-bold uppercase text-center p-4'>Sign In</h1>
+          <h1 className='text-4xl text-white font-bold uppercase text-center p-4'>Đăng nhập</h1>
         </div>
         <Formik
           initialValues={initialValues}
@@ -101,7 +108,7 @@ const Login = () => {
                 id='email'
                 name='email'
                 className='w-full col-span-7 border-b-2 border-gray-300 py-2 focus:outline-none focus:border-b-2 focus:border-main-red'
-                placeholder='Enter email'
+                placeholder='Nhập email'
               />
               <div className='col-span-1'></div>
               <ErrorMessage
@@ -116,14 +123,14 @@ const Login = () => {
                 className='block text-[#808080] text-sm font-bold self-center col-span-1'
                 htmlFor='password'
               >
-                Password
+                Mật khẩu
               </label>
               <Field
                 type='password'
                 id='password'
                 name='password'
                 className='w-full col-span-7 border-b-2 border-gray-300 py-2 focus:outline-none focus:border-b-2 focus:border-main-red'
-                placeholder='Enter password'
+                placeholder='Nhập mật khẩu'
               />
               <div className='col-span-1'></div>
               <ErrorMessage
@@ -137,7 +144,7 @@ const Login = () => {
                 to='/forgot-password'
                 className='text-[#5d84ef] text-sm'
               >
-                Forgot your password?
+                Quên mật khẩu?
               </Link>
             </div>
             <div className='mb-6 grid grid-cols-8 pt-7'>
@@ -146,16 +153,16 @@ const Login = () => {
                 type='submit'
                 className='w-full col-span-7 bg-main-red text-white font-bold py-2 rounded-full hover:bg-main-black'
               >
-                Login
+                Đăng nhập
               </button>
             </div>
             <div className='col-span-6 text-right text-sm'>
-              <span className=''>Don't have account? </span>
+              <span className=''>Chưa có tài khoản? </span>
               <Link
                 to='/register'
                 className='text-[#999999] font-bold'
               >
-                Register now
+                Đăng ký ngay
               </Link>
             </div>
           </Form>

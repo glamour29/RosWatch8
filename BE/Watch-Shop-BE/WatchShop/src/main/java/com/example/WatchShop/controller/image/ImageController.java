@@ -23,7 +23,6 @@ public class ImageController {
 
     @GetMapping("/{imageName}")
     public ResponseEntity<?> getImage(@PathVariable("imageName") String imageName) {
-//    log.info("getImage");
         if (imageName == null) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
@@ -34,10 +33,11 @@ public class ImageController {
         try {
             byte[] buffer = Files.readAllBytes(fileName);
             ByteArrayResource bytes = new ByteArrayResource(buffer);
+            MediaType mediaType = getMediaType(imageName);
             return ResponseEntity
                     .ok()
                     .contentLength(buffer.length)
-                    .contentType(MediaType.IMAGE_PNG)
+                    .contentType(mediaType)
                     .body(bytes);
         } catch (IOException e) {
             if ("undefined".equals(imageName)) {
@@ -49,5 +49,16 @@ public class ImageController {
                     .status(HttpStatus.OK)
                     .build();
         }
+    }
+
+    private MediaType getMediaType(String imageName) {
+        if (imageName == null) return MediaType.IMAGE_PNG;
+        String lower = imageName.toLowerCase();
+        if (lower.endsWith(".jpg") || lower.endsWith(".jpeg")) return MediaType.IMAGE_JPEG;
+        if (lower.endsWith(".png")) return MediaType.IMAGE_PNG;
+        if (lower.endsWith(".gif")) return MediaType.IMAGE_GIF;
+        if (lower.endsWith(".webp")) return MediaType.parseMediaType("image/webp");
+        if (lower.endsWith(".avif")) return MediaType.parseMediaType("image/avif");
+        return MediaType.IMAGE_PNG;
     }
 }

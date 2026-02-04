@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className='bg-neutral-200 text-center text-neutral-600 dark:bg-neutral-600 dark:text-neutral-200 lg:text-left'>
       <div className='flex items-center justify-center border-b-2 border-main-red p-6 dark:border-neutral-500 lg:justify-between'>
         <div className='mr-12 hidden lg:block'>
-          <span className='font-bold'>RosWatch is very happy to accompany you !!!</span>
+          <span className='font-bold'>RosWatch rất vui được đồng hành cùng bạn !!!</span>
         </div>
         <div className='flex justify-center'>
           <a
@@ -39,30 +39,28 @@ const Footer = () => {
               RosWatch
             </h6>
             <p>
-              "Explore the latest in wearable technology with our online store, offering a diverse
-              collection of smartwatches that seamlessly blend style and functionality. Discover the
-              future of timekeeping at our smartwatch boutique."
+              Khám phá công nghệ đồng hồ thông minh tại cửa hàng trực tuyến của chúng tôi, với bộ sưu tập đa dạng kết hợp phong cách và tiện ích. Trải nghiệm tương lai của thời trang đeo tay tại RosWatch.
             </p>
           </div>
           <div>
-            <h6 className='mb-4 font-semibold uppercase'>Contact Us</h6>
+            <h6 className='mb-4 font-semibold uppercase'>Liên hệ</h6>
             <p>Email: roswatch8255@gmail.com</p>
-            <p>Phone: +1 (123) 456-7890</p>
+            <p>Điện thoại: +84 968794894</p>
           </div>
           <div>
-            <h6 className='mb-4 font-semibold uppercase'>Customer Support</h6>
-            <p>FAQs</p>
-            <p>Shipping & Returns</p>
-            <p>Warranty Information</p>
+            <h6 className='mb-4 font-semibold uppercase'>Hỗ trợ khách hàng</h6>
+            <p>Câu hỏi thường gặp</p>
+            <p>Giao hàng &amp; Đổi trả</p>
+            <p>Bảo hành</p>
           </div>
           <div>
-            <h6 className='mb-4 font-semibold uppercase'>Newsletter</h6>
-            <p>Subscribe to our newsletter for the latest updates and promotions.</p>
+            <h6 className='mb-4 font-semibold uppercase'>Đăng ký nhận tin</h6>
+            <p>Đăng ký nhận tin khuyến mãi và cập nhật mới nhất từ chúng tôi.</p>
           </div>
         </div>
       </div>
       <div className='bg-main-red p-6 text-center dark:bg-neutral-100'>
-        <span className='text-neutral-100'>© 2024 Copyright: </span>
+        <span className='text-neutral-100'>© 2024 Bản quyền: </span>
         <a
           className='font-semibold text-neutral-100 dark:text-neutral-100'
           href='https://tw-elements.com/'

@@ -10,8 +10,8 @@ const settings = {
   dots: true,
   infinite: true,
   speed: 500,
-  slidesToShow: 4, // Số lượng hiển thị trên mỗi slide
-  slidesToScroll: 1, // Số lượng slide được cuộn mỗi lần
+  slidesToShow: 4,
+  slidesToScroll: 1,
 };
 
 const Top5Product = () => {
@@ -20,14 +20,12 @@ const Top5Product = () => {
 
   useEffect(() => {
     fetchTop5();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchTop5 = async () => {
     try {
       const response = await requestHandler.get('product/top5');
       const data = await response.data.data;
-      // console.log(data);
       setTop(data);
     } catch (error) {
       console.log(error);
@@ -49,7 +47,7 @@ const Top5Product = () => {
   return (
     <div className='mt-4'>
       <p className='text-main-black text-4xl font-bold py-5 border-b-2 border-gray-400'>
-        SELLING PRODUCTS
+        SẢN PHẨM BÁN CHẠY
       </p>
       <Slider
         {...settings}

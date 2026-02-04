@@ -2,6 +2,8 @@ import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import requestHandler from '../../utils/requestHandle';
 
 const initialValues = {
@@ -10,15 +12,16 @@ const initialValues = {
   confirmPassword: '',
 };
 
-const ChangePassword = () => {
+const ChangePassword = ({ user }) => {
   const navigate = useNavigate();
+  const initial = (user?.fullName || 'U').charAt(0).toUpperCase();
 
   const validationSchema = Yup.object().shape({
-    currentPassword: Yup.string().required('Current password is required'),
-    newPassword: Yup.string().required('New password is required'),
+    currentPassword: Yup.string().required('Vui lòng nhập mật khẩu hiện tại'),
+    newPassword: Yup.string().required('Vui lòng nhập mật khẩu mới'),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
-      .required('Confirm new password is required'),
+      .oneOf([Yup.ref('newPassword'), null], 'Mật khẩu xác nhận không khớp')
+      .required('Vui lòng nhập lại mật khẩu mới'),
   });
 
   const handlePasswordChange = async (values, { setSubmitting }) => {
@@ -29,9 +32,15 @@ const ChangePassword = () => {
       };
       const response = await requestHandler.post('change-password', dataReq);
       const data = await response.data;
-      data === 'Change password successfully!' && navigate('/client');
+      if (data === 'Change password successfully!') {
+        toast.success('Đổi mật khẩu thành công!');
+        setTimeout(() => navigate('/client'), 1500);
+      } else {
+        toast.info(data || 'Đã cập nhật.');
+      }
     } catch (err) {
-      console.error('Lỗi:', err);
+      const msg = err.response?.data?.message || err.response?.data || 'Mật khẩu hiện tại không đúng. Vui lòng thử lại.';
+      toast.error(typeof msg === 'string' ? msg : 'Đổi mật khẩu thất bại. Vui lòng thử lại.');
     }
     setSubmitting(false);
   };
@@ -46,11 +55,12 @@ const ChangePassword = () => {
                 <div className='flex flex-wrap justify-center'>
                   <div className='w-full lg:w-3/12 px-4 lg:order-2 flex justify-center'>
                     <div className='relative w-full h-full'>
-                      <img
-                        alt='...'
-                        src='/profile.svg'
-                        className='shadow-xl rounded-full h-auto align-middle border-none absolute left-0 right-0 -top-24 max-w-150-px'
-                      />
+                      <div
+                        className='shadow-xl rounded-full h-36 w-36 flex items-center justify-center text-white text-4xl font-bold border-4 border-white absolute left-0 right-0 -top-24 max-w-[150px] mx-auto bg-main-red'
+                        aria-hidden
+                      >
+                        {initial}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -67,14 +77,14 @@ const ChangePassword = () => {
                             className='text-[#808080] text-sm font-bold self-center'
                             htmlFor='currentPassword'
                           >
-                            Current Password
+                            Mật khẩu hiện tại
                           </label>
                           <Field
                             type='password'
                             id='currentPassword'
                             name='currentPassword'
                             className='w-full border-b-2 border-gray-300 py-2 focus:outline-none focus:border-b-2 focus:border-main-red'
-                            placeholder='Enter current password'
+                            placeholder='Nhập mật khẩu hiện tại'
                           />
                           <ErrorMessage
                             name='currentPassword'
@@ -87,14 +97,14 @@ const ChangePassword = () => {
                             className='text-[#808080] text-sm font-bold self-center'
                             htmlFor='newPassword'
                           >
-                            New Password
+                            Mật khẩu mới
                           </label>
                           <Field
                             type='password'
                             id='newPassword'
                             name='newPassword'
                             className='w-full border-b-2 border-gray-300 py-2 focus:outline-none focus:border-b-2 focus:border-main-red'
-                            placeholder='Enter new password'
+                            placeholder='Nhập mật khẩu mới'
                           />
                           <ErrorMessage
                             name='newPassword'
@@ -107,14 +117,14 @@ const ChangePassword = () => {
                             className='text-[#808080] text-sm font-bold self-center'
                             htmlFor='confirmPassword'
                           >
-                            Confirm Password
+                            Xác nhận mật khẩu mới
                           </label>
                           <Field
                             type='password'
                             id='confirmPassword'
                             name='confirmPassword'
                             className='w-full border-b-2 border-gray-300 py-2 focus:outline-none focus:border-b-2 focus:border-main-red'
-                            placeholder='Confirm new password'
+                            placeholder='Nhập lại mật khẩu mới'
                           />
                           <ErrorMessage
                             name='confirmPassword'
@@ -127,7 +137,7 @@ const ChangePassword = () => {
                           disabled={isSubmitting}
                           className='bg-main-black text-white py-2 px-4 rounded-xl hover:opacity-90'
                         >
-                          Save
+                          Lưu
                         </button>
                       </Form>
                     )}

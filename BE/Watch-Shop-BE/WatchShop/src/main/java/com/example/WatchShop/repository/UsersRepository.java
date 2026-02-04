@@ -21,7 +21,6 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 
     Optional<Users> findByEmail(String email);
 
-    //check email in DB
     boolean existsByEmail(String email);
 
     @Query(value = TOP_USER_BUY_THE_MOST, nativeQuery = true)

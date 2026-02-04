@@ -22,7 +22,6 @@ const Statistical = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [topGoodPrice, setTopGoodPrice] = useState({ labels: [], datas: [] });
   const [topBestRating, setTopBestRating] = useState({ labels: [], datas: [] });
-  const [topUserBuyTheMost, setTopUserBuyTheMost] = useState({ labels: [], datas: [] });
   const [statistical, setStatistical] = useState({ labels: [], datas: [] });
   const [statisticalByYear, setStatisticalByYear] = useState(0);
   const [monthSelect, setMonthSelect] = useState(0);
@@ -33,17 +32,14 @@ const Statistical = () => {
     window.scrollTo(0, 0);
 
     getTopBestSeller();
-    getTopUserByTheMost();
     getTopBestRatingFromApi();
     getStatistical(monthSelect, yearSelect);
     getStatisticalByYear(yearSelect);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getTopBestSeller = async () => {
     const response = await requestHandle.get('statistical/top-5-best-sellers');
     const result = await response.data.data;
-    // console.log(result);
     const labels = [];
     const datas = [];
     result.forEach((product) => {
@@ -56,7 +52,6 @@ const Statistical = () => {
   const getTopBestRatingFromApi = async () => {
     const response = await requestHandle.get('statistical/best-rating');
     const result = await response.data;
-    // console.log(result);
     const labels = [];
     const datas = [];
     result.forEach((product) => {
@@ -66,37 +61,17 @@ const Statistical = () => {
     setTopBestRating({ ...topBestRating, labels, datas });
   };
 
-  const getTopUserByTheMost = async () => {
-    try {
-      const response = await requestHandle.get('statistical/top-buy-the-most');
-      const result = await response.data;
-      const labels = [];
-      const datas = [];
-      result.forEach((rs) => {
-        labels.push(rs.users.fullName);
-        datas.push(rs.quantity);
-      });
-      setTopUserBuyTheMost({ ...topUserBuyTheMost, labels, datas });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   const getStatistical = async (m, y) => {
     try {
       const date = new Date();
       m === 0 && (m = date.getMonth() + 1);
       y === 0 && (y = date.getFullYear());
-      // console.log(m, y, urlApi);
       const response = await requestHandle.get(`statistical/${m}/${y}`);
       const result = await response.data;
       const labels = [];
-      // console.log(response);
-      // console.log(result);
       result.forEach((rs, index) => {
         labels.push(index + 1);
       });
-      // console.log(labels);
       setStatistical({ ...statistical, labels, datas: result });
     } catch (error) {
       console.error(error);
@@ -158,17 +133,51 @@ const Statistical = () => {
               <div className='py-3 text-2xl text-center font-bold'>
                 Sản phẩm khách hàng mua nhiều nhất
               </div>
-              <div className='p-4 flex items-center'>
+              <div className='p-4' style={{ minHeight: 280 }}>
                 <Bar
                   data={{
-                    labels: topUserBuyTheMost.labels,
+                    labels: topGoodPrice.labels.map((name) =>
+                      name.length > 25 ? `${name.slice(0, 25)}...` : name
+                    ),
                     datasets: [
                       {
                         label: 'Số lượng đã mua',
-                        data: topUserBuyTheMost.datas,
+                        data: topGoodPrice.datas,
                         backgroundColor: 'rgba(54, 162, 235)',
                       },
                     ],
+                  }}
+                  options={{
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    aspectRatio: 1.1,
+                    plugins: {
+                      legend: { display: true },
+                      tooltip: {
+                        titleAlign: 'left',
+                        bodyAlign: 'left',
+                        padding: 12,
+                        titleFont: { size: 13 },
+                        bodyFont: { size: 12 },
+                        callbacks: {
+                          title: (items) => {
+                            const idx = items[0]?.dataIndex;
+                            return idx !== undefined ? topGoodPrice.labels[idx] : '';
+                          },
+                          label: (ctx) => `Số lượng đã mua: ${ctx.raw}`,
+                        },
+                      },
+                    },
+                    scales: {
+                      x: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 },
+                      },
+                      y: {
+                        ticks: { autoSkip: false, font: { size: 12 } },
+                      },
+                    },
                   }}
                 />
               </div>

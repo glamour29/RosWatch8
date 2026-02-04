@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// Sử dụng HashRouter cho GitHub Pages, BrowserRouter cho production domain
 import { HashRouter, BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import './index.css';
@@ -8,8 +7,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './utils/store';
 
-// Sử dụng HashRouter nếu deploy lên GitHub Pages (có /#/ trong URL)
-// Sử dụng BrowserRouter nếu deploy lên domain riêng
 const Router = process.env.REACT_APP_USE_HASH_ROUTER === 'true' ? HashRouter : BrowserRouter;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

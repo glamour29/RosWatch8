@@ -1,5 +1,6 @@
 package com.example.WatchShop.service.i_service;
 
+import com.example.WatchShop.model.Roles;
 import com.example.WatchShop.model.Users;
 import com.example.WatchShop.model.dto.req.UsersReqDTO;
 import com.example.WatchShop.model.dto.res.Response1Form;
@@ -37,4 +38,8 @@ public interface UserService {
     List<Response1Form> topUserBuyTheMost(int i);
 
     void updateRole(Long id);
+
+    Roles getOrCreateRoleUser();
+
+    void ensureUserHasRole(Users user);
 }

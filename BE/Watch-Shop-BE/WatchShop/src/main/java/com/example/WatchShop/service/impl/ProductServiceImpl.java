@@ -59,18 +59,14 @@ public class ProductServiceImpl implements ProductService {
         Date currentDate = new Date(calendar.getTime().getTime());
 
         if (products.getId() == null) {
-            //addProduct
             return addProducts(products, currentDate, brands);
         } else {
-            //update
             return updateProduct(products, brands, currentDate);
         }
     }
 
     private int addProducts(ProductReqDTO products, Date currentDate, Brands brands) {
         int count = productRepository.countByName(products.getName());
-
-        // đã tồn tại sản phẩm
         if (count > 0) {
             return 2;
         }

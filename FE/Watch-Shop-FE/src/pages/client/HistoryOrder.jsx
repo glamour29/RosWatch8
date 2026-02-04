@@ -14,11 +14,8 @@ const HistoryOrder = () => {
 
   const fetchOrderData = async () => {
     try {
-      // Fetch order data from API
       const orderResponse = await requestHandler.get('order/');
       const orderData = await orderResponse.data.data;
-
-      // Fetch order detail for each order
       const ordersWithDetails = await Promise.all(
         orderData.map(async (order) => {
           const orderDetailResponse = await requestHandler.get(`order/order-detail/${order.id}`);
@@ -73,7 +70,7 @@ const HistoryOrder = () => {
         className='bg-white shadow-xl rounded-lg p-4 mb-4'
       >
         <div className='flex mb-2 border-b pb-2'>
-          <p className='text-lg font-semibold'>Order Code: </p>
+          <p className='text-lg font-semibold'>Mã đơn hàng: </p>
           <p className='text-lg ml-3'>{order.orderCode}</p>
           <p className='flex items-center ml-5'>
             {order.status === 'accepted' && (
@@ -92,20 +89,20 @@ const HistoryOrder = () => {
             {order.status === 'waiting' && (
               <>
                 <CgDanger className='text-yellow-400 w-6 h-6 mr-2 fill-current' />
-                <span className='text-yellow-400 text-lg font-semibold'> Waiting</span>
+                <span className='text-yellow-400 text-lg font-semibold'> Chờ xử lý</span>
               </>
             )}
             {order.status === 'cancel' && (
               <>
                 <FcCancel className='text-red-400 w-6 h-6 mr-2 fill-current' />
-                <span className='text-red-400 text-lg font-semibold'>Cancel</span>
+                <span className='text-red-400 text-lg font-semibold'>Đã hủy</span>
               </>
             )}
           </p>
         </div>
         <ul>{renderDetailOrder(order.orderDetail)}</ul>
         <div className='flex justify-end'>
-          <p className='font-semibold mr-2'>Total:</p>
+          <p className='font-semibold mr-2'>Tổng tiền:</p>
           <p className='text-main-red font-bold'>{lamTronGia(order.totalAmount)} vnd</p>
         </div>
       </div>
@@ -117,11 +114,11 @@ const HistoryOrder = () => {
       <div className='w-container mx-auto'>
         <section className='py-16 bg-blueGray-200'>
           <div className='mx-auto px-4'>
-            <h1 className='text-3xl font-semibold mb-6'>Order History</h1>
+            <h1 className='text-3xl font-semibold mb-6'>Lịch sử đơn hàng</h1>
             {renderOrders()}
             <div className='flex justify-end'>
               <button className='bg-main-red text-white py-2 px-4 rounded-xl mt-4'>
-                <Link to={'/client/'}>Continue Shopping</Link>
+                <Link to={'/client/'}>Tiếp tục mua sắm</Link>
               </button>
             </div>
           </div>

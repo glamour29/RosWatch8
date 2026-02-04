@@ -14,7 +14,7 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('Email is required'),
+    email: Yup.string().email('Email không hợp lệ').required('Vui lòng nhập email'),
   });
 
   const handleForgotPassword = async (values) => {
@@ -22,6 +22,7 @@ const ForgotPassword = () => {
       const response = await requestHandle.post('forgot-password', { email: values.email });
       const data = await response.data;
       if (data === 'Invalid email or email has not been registered!') {
+        setMessage('Email không hợp lệ hoặc chưa được đăng ký!');
         setMessage(data);
         setType('error');
       } else {
@@ -42,7 +43,7 @@ const ForgotPassword = () => {
           style={{ backgroundImage: `url(${undraw})` }}
         >
           <h1 className='text-4xl text-white font-bold uppercase text-center p-4'>
-            Forgot Password
+            Quên mật khẩu
           </h1>
         </div>
         <Formik
@@ -70,7 +71,7 @@ const ForgotPassword = () => {
                 id='email'
                 name='email'
                 className='w-full col-span-7 border-b-2 border-gray-300 py-2 focus:outline-none focus:border-b-2 focus:border-main-red'
-                placeholder='Enter email'
+                placeholder='Nhập email'
               />
               <div className='col-span-1'></div>
               <ErrorMessage
@@ -86,16 +87,16 @@ const ForgotPassword = () => {
                 type='submit'
                 className='w-full col-span-7 bg-main-red text-white font-bold py-2 rounded-full hover:bg-main-black'
               >
-                Send Email
+                Gửi email
               </button>
             </div>
             <div className='col-span-6 text-right text-sm'>
-              <span className=''>Return page </span>
+              <span className=''>Quay lại </span>
               <Link
                 to='/login'
                 className='text-[#999999] font-bold'
               >
-                Login
+                Đăng nhập
               </Link>
             </div>
           </Form>

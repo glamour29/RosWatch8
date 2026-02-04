@@ -14,11 +14,6 @@ const requestHandler = axios.create({
 requestHandler.interceptors.request.use(
   (config) => {
     const token = localStorages.getToken();
-
-    // 🔍 Thêm log để kiểm tra
-    console.log('Token:', token); 
-    console.log('Request config:', config); 
-
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }

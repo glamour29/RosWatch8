@@ -72,8 +72,6 @@ const Brands = () => {
         response = await requestHandler.post('brands/', values);
       }
       const data = await response.data.data;
-      // const updatedBrands = brands.map((brand) => (brand.id === data.data.id ? data.data : brand));
-      // setBrands(updatedBrands);
       setState(!state);
       setMessage(data);
       setType('success');

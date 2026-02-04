@@ -95,7 +95,6 @@ public class OrderServiceImpl implements OrderService {
         List<Double> response3Forms = new ArrayList<>();
         List<Map<String, Object>> results = orderRepository.statistical(year, month);
 
-        // create days of the month
         for (int i = 0; i < daysInMonth; i++) {
             response3Forms.add(0.0);
         }
@@ -130,7 +129,7 @@ public class OrderServiceImpl implements OrderService {
         Users user = userService.getUserFromRequest(request).get();
         List<Orders> ordersList = null;
 
-        if ("ROLE_USER".equals(user.getRoles().getName())) {
+        if (user.getRoles() == null || "ROLE_USER".equals(user.getRoles().getName())) {
             ordersList = new ArrayList<>(user.getOrders());
         } else {
             ordersList = orderRepository.findAll();
@@ -167,11 +166,8 @@ public class OrderServiceImpl implements OrderService {
     public void addToOrder(OrderReqDTO orderReqDTO) {
         Users user = userService.getUserById(orderReqDTO.getUserId()).get();
         Optional<Carts> cart = cartRepository.findByUsers(user);
-        // tao order tu cart
         Orders orders = new Orders();
         orders.setDate(new java.sql.Date(new java.util.Date().getTime()));
-
-        // Create HD + Date
         orders.setOrderCode("HD" + new java.util.Date().getTime());
         orders.setStatus(orderReqDTO.getStatus());
         orders.setTotal(orderReqDTO.getTotal());
@@ -193,7 +189,6 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setProducts(cartDetail.getProducts());
             orderDetail.setQuantity(cartDetail.getQuantity());
             orderDetailRepository.save(orderDetail);
-            // Tăng soldQuantity và giảm quantity của sản phẩm
             Products product = cartDetail.getProducts();
             product.setSoldQuantity(product.getSoldQuantity() + cartDetail.getQuantity());
             product.setQuantity(product.getQuantity() - cartDetail.getQuantity());

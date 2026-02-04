@@ -15,7 +15,7 @@ const similarProducts = [
   {
     id: 3,
     name: 'Product 3',
-    image: 'https://www.shopavenue.co.za/wp-content/uploads/2018/08/banner-1024x390.jpg',
+    image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=1244&h=450&fit=crop',
   },
 ];
 

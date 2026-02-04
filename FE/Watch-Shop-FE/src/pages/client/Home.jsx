@@ -19,7 +19,6 @@ const Home = () => {
   useEffect(() => {
     fetchProduct();
     fetchCountCart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchProduct = async () => {
@@ -37,8 +36,9 @@ const Home = () => {
   const fetchCountCart = async () => {
     try {
       const response = await requestHandle.get('cart/');
-      const carts = await response.data.data;
-      // dispatch(setCountCart(carts.length));
+      const carts = response.data.data;
+      const count = Array.isArray(carts) ? carts.length : 0;
+      dispatch(setCountCart(count));
     } catch (err) {
       console.error(err);
     }
