@@ -20,7 +20,7 @@ public class MailConfig {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(env.getProperty("spring.mail.host", "smtp.gmail.com"));
         mailSender.setPort(Integer.parseInt(env.getProperty("spring.mail.port", "587")));
-        mailSender.setUsername(env.getProperty("spring.mail.username", "roswatch@gmail.com"));
+        mailSender.setUsername(env.getProperty("spring.mail.username", "roswatch50@gmail.com"));
         mailSender.setPassword(env.getProperty("spring.mail.password", "qobxbdsrjuwfjeos"));
 
         Properties props = mailSender.getJavaMailProperties();

@@ -16,5 +16,5 @@ spring.jpa.show-sql=false
 # Mail (forgot password) - tùy chọn
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
-spring.mail.username=<email_của_bạn@gmail.com>
+spring.mail.username=roswatch50@gmail.com
 spring.mail.password=<app_password>
