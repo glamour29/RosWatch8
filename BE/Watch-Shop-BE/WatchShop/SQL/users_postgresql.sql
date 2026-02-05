@@ -1,10 +1,4 @@
--- PostgreSQL INSERT statements for users
--- Converted from SQL Server syntax
 
--- Note: Make sure roles table has id=1 and id=2 before inserting users
--- If not, insert roles first:
--- INSERT INTO roles (id, name) VALUES (1, 'ROLE_USER');
--- INSERT INTO roles (id, name) VALUES (2, 'ROLE_ADMIN');
 
 INSERT INTO users (address, birth_date, email, full_name, password, phone, id_role, is_deleted)
 VALUES ('Cà Mau', '2005-10-29', 'duyle3352@gmail.com', 'LeTrieuDuy',

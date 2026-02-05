@@ -1,22 +1,6 @@
--- ============================================
--- IMPORT USERS DATA TO SUPABASE
--- Copy toàn bộ file này vào Supabase SQL Editor và Run
--- ============================================
 
--- Bước 1: Kiểm tra và tạo Roles nếu chưa có
--- Nếu roles đã có rồi thì bỏ qua bước này
-
--- Kiểm tra roles hiện có
 SELECT * FROM roles;
 
--- Nếu chưa có roles, uncomment 2 dòng dưới để insert:
--- INSERT INTO roles (id, name) VALUES (1, 'ROLE_USER') ON CONFLICT (id) DO NOTHING;
--- INSERT INTO roles (id, name) VALUES (2, 'ROLE_ADMIN') ON CONFLICT (id) DO NOTHING;
-
--- Bước 2: Insert Users (passwords đã được hash bcrypt)
--- LƯU Ý: Passwords đã hash, không thể lấy lại password gốc
--- Nếu muốn test login, cần biết password gốc hoặc reset password
--- Nếu gặp lỗi duplicate email, có thể skip user đó hoặc xóa user cũ trước
 
 INSERT INTO users (address, birth_date, email, full_name, password, phone, id_role, is_deleted)
 VALUES ('Cà Mau', '2005-10-29', 'duyle3352@gmail.com', 'LeTrieuDuy',
