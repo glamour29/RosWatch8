@@ -1,1 +1,23 @@
 .vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Node/React
+node_modules/
+build/
+dist/
+.env
+.env.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Java/Maven
+target/
+
+# Backend secrets (keep the template, ignore real values)
+BE/Watch-Shop-BE/WatchShop/src/main/resources/application.properties
