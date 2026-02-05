@@ -76,6 +76,7 @@ const Profile = () => {
 
   useEffect(() => {
     user && formik.setValues(user);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   return (

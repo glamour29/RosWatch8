@@ -133,7 +133,29 @@ public class UserServiceImlp implements UserService {
         context.setVariable("password", password);
         String emailContent = templateEngine.process("recovery_password", context);
         sendEmail(user, "Forgot password", emailContent);
+    }
 
+    @Override
+    public void sendResetCode(Users user, String code) throws MessagingException {
+        Context context = new Context();
+        context.setVariable("username", user.getFullName());
+        context.setVariable("code", code);
+        String emailContent = templateEngine.process("recovery_code", context);
+        sendEmail(user, "Mã đặt lại mật khẩu / Password reset code", emailContent);
+    }
+
+    @Override
+    public boolean resetPasswordWithCode(String email, String code, String newPassword) {
+        Optional<Users> userOpt = getUserByEmail(email);
+        if (userOpt.isEmpty()) return false;
+        Users user = userOpt.get();
+        if (user.getResetCode() == null || !user.getResetCode().equals(code)) return false;
+        if (user.getResetCodeExpiry() == null || user.getResetCodeExpiry() < System.currentTimeMillis()) return false;
+        user.setPassword(encoder.encode(newPassword));
+        user.setResetCode(null);
+        user.setResetCodeExpiry(null);
+        usersRepository.save(user);
+        return true;
     }
 
     public Optional<Users> getUserFromRequest(HttpServletRequest request) {

@@ -32,6 +32,7 @@ const OrderDetail = () => {
     window.scrollTo(0, 0);
     fetchCart();
     fetchUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchUser = async () => {

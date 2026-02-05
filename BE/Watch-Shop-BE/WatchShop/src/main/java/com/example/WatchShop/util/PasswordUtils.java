@@ -34,4 +34,11 @@ public class PasswordUtils {
 
         return sb.toString();
     }
+
+    /** Tạo mã 6 chữ số để đặt lại mật khẩu. */
+    public static String generateResetCode() {
+        SecureRandom random = new SecureRandom();
+        int code = 100_000 + random.nextInt(900_000);
+        return String.valueOf(code);
+    }
 }

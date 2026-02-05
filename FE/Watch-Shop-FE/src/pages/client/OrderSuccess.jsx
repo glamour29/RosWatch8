@@ -30,6 +30,7 @@ function OrderSuccess() {
     } else {
       Swal.fire('Thanh toán thất bại', '', 'error');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handlePaymentSuccess = async (amount) => {

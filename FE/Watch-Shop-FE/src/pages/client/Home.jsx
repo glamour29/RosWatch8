@@ -19,6 +19,7 @@ const Home = () => {
   useEffect(() => {
     fetchProduct();
     fetchCountCart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchProduct = async () => {

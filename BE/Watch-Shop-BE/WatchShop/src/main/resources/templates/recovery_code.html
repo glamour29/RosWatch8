@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <title>Password reset code</title>
+    <style>
+        /* Same styles as recovery_password - abbreviated for brevity, reuse from recovery_password */
+        img { border: none; -ms-interpolation-mode: bicubic; max-width: 100%; }
+        body { background-color: #f6f6f6; font-family: sans-serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; }
+        table { border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; }
+        table td { font-family: sans-serif; font-size: 14px; vertical-align: top; }
+        .body { background-color: #f6f6f6; width: 100%; }
+        .container { display: block; margin: 0 auto !important; max-width: 580px; padding: 10px; width: 580px; }
+        .content { box-sizing: border-box; display: block; margin: 0 auto; max-width: 580px; padding: 10px; }
+        .main { background: #ffffff; border-radius: 3px; width: 100%; }
+        .wrapper { box-sizing: border-box; padding: 20px; }
+        p { font-family: sans-serif; font-size: 14px; margin: 0 0 15px; }
+    </style>
+</head>
+<body>
+<table border="0" cellpadding="0" cellspacing="0" class="body" role="presentation">
+    <tr>
+        <td>&nbsp;</td>
+        <td class="container">
+            <div class="content">
+                <table class="main" role="presentation">
+                    <tr>
+                        <td class="wrapper">
+                            <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+                                <tr>
+                                    <td>
+                                        <p>Hi <span style="font-style: italic; color: #22bf27" th:text="${username}"></span>.</p>
+                                        <p>You requested a password reset. Your verification code is below.</p>
+                                        <h2 style="color: blue; font-style: italic" th:text="${code}"></h2>
+                                        <p>Enter this code on the reset password page. The code expires in 15 minutes.</p>
+                                        <p>If you did not request this, please ignore this email.</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+</body>
+</html>

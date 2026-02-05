@@ -38,6 +38,10 @@ public class Users implements UserDetails {
     @NotNull
     private String phone;
     private Boolean isDeleted = false;
+    /** Mã xác thực đặt lại mật khẩu (6 số), null nếu không có yêu cầu. */
+    private String resetCode;
+    /** Thời điểm hết hạn mã (epoch millis). */
+    private Long resetCodeExpiry;
     @ManyToOne
     @JoinColumn(name = "idRole")
     private Roles roles;

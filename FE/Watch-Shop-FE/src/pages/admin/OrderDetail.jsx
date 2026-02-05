@@ -24,6 +24,7 @@ const OrderDetail = () => {
 
   useEffect(() => {
     fetchOrderDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchOrderDetails = async () => {

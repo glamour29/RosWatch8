@@ -37,6 +37,7 @@ const ProductDetail = () => {
     window.scrollTo(0, 0);
     fetchProduct();
     getRatingByUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idProduct]);
 
   const fetchProduct = async () => {

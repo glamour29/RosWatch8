@@ -35,6 +35,7 @@ const Statistical = () => {
     getTopBestRatingFromApi();
     getStatistical(monthSelect, yearSelect);
     getStatisticalByYear(yearSelect);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getTopBestSeller = async () => {

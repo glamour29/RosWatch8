@@ -31,6 +31,10 @@ public interface UserService {
 
     void sendRecoverPassword(Users user, String password) throws MessagingException;
 
+    void sendResetCode(Users user, String code) throws MessagingException;
+
+    boolean resetPasswordWithCode(String email, String code, String newPassword);
+
     public Optional<Users> getUserFromRequest(HttpServletRequest request);
 
     public boolean isCorrectPassword(Users user, String currentPassword);

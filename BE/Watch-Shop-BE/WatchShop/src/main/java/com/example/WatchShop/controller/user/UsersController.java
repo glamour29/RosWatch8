@@ -6,7 +6,6 @@ import com.example.WatchShop.model.dto.res.UserResDTO;
 import com.example.WatchShop.service.i_service.JwtService;
 import com.example.WatchShop.service.i_service.UserService;
 import com.example.WatchShop.util.PasswordUtils;
-import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -93,7 +92,7 @@ public class UsersController {
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<Object> forgotPassword(@RequestBody Map<String, String> email) throws MessagingException {
+    public ResponseEntity<Object> forgotPassword(@RequestBody Map<String, String> email) {
         log.info("forgotPassword");
         Optional<Users> user = userService.getUserByEmail(email.get("email"));
 
@@ -103,14 +102,38 @@ public class UsersController {
                     .body("Invalid email or email has not been registered!");
         }
 
-        String password = PasswordUtils.generateRandomPassword(12);
-        user.get()
-                .setPassword(passwordEncoder.encode(password));
+        String code = PasswordUtils.generateResetCode();
+        user.get().setResetCode(code);
+        user.get().setResetCodeExpiry(System.currentTimeMillis() + 15 * 60 * 1000L);
         userService.save(user.get());
-        userService.sendRecoverPassword(user.get(), password);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body("Please check your email to get recovery password!");
+
+        try {
+            userService.sendResetCode(user.get(), code);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Code sent to your email. Check your inbox.");
+        } catch (Exception e) {
+            log.error("Could not send reset code email", e);
+            String hint = e.getMessage() != null && e.getMessage().contains("534") ? " Gmail báo 534: không dùng mật khẩu đăng nhập, phải dùng App Password (xem application.properties.template)." : "";
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Không gửi được email mã xác thực." + hint + " Cấu hình spring.mail trong application.properties rồi thử lại.");
+        }
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<Object> resetPassword(@RequestBody Map<String, String> body) {
+        String email = body.get("email");
+        String code = body.get("code");
+        String newPassword = body.get("newPassword");
+        if (email == null || code == null || newPassword == null || newPassword.isBlank()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Missing email, code or newPassword.");
+        }
+        boolean ok = userService.resetPasswordWithCode(email, code, newPassword);
+        if (ok) {
+            return ResponseEntity.status(HttpStatus.OK).body("Password has been reset. You can log in with your new password.");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid or expired code. Request a new code from Forgot password.");
     }
 
     @PostMapping("/change-password")

@@ -18,6 +18,7 @@ const Orders = () => {
     setPageCount(Math.ceil(orders.length / itemsPerPage));
     setCurrentPage(0);
     fetchOrders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handlePageChange = ({ selected }) => {

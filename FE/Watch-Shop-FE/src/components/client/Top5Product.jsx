@@ -20,6 +20,7 @@ const Top5Product = () => {
 
   useEffect(() => {
     fetchTop5();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchTop5 = async () => {
